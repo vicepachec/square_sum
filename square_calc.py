@@ -1,5 +1,4 @@
 def main():
-	
 	num_case = (input("Insert the number of cases: "))
 	try:
 		(int(num_case))
@@ -13,6 +12,7 @@ def main():
 	result = cases_counter(0, num_case, 0, 0)
 	print("Here are the results: ")
 	print(result)
+	
 def cases_counter(result, num_case, case_count, index):
 	if case_count == num_case:
 		return (result)
@@ -22,15 +22,17 @@ def cases_counter(result, num_case, case_count, index):
 		(int(num_int))
 	except:
 		print("Error! Input should be a valid number between 1 and 100.")
-		return cases_counter(result, num_case, case_count)
+		return cases_counter(result, num_case, case_count, index)
 	
 	num_int = int(num_int)
-	if (num_int > 100) or (num_int < 1):
+	if (num_int > 100) or (num_int < 1) or (num_int == ''):
 		print("Ammount of numbers should be between 1 and 100. Try Again!")
-		return cases_counter(result, num_case, case_count)
+		return cases_counter(result, num_case, case_count, index)
 	
-	print("Insert the number(s) separated by spaces:")
-	num_tuple = tuple(input().split())
+	num_tuple = tuple(input("Insert the number(s) separated by spaces: ").split())
+	if (len(num_tuple) > num_int):
+		print("Error! Incorrect ammount of integers inserted.")
+		return cases_counter(result, num_case, case_count, index)
 	try:
 		(int(num_tuple[index]))		
 	except:
@@ -48,12 +50,10 @@ def cases_counter(result, num_case, case_count, index):
 def calc_square(result, num_int, index, num_tuple):
 	if index == num_int:
 		return (result)
-	if num_tuple[index] == ' ':
-			return(calc_square(result, num_int + 1, index + 1, num_tuple))
-	else:
-		num = int(num_tuple[index])
-		if num >= 1:
-			result = result + num ** 2
+
+	num = int(num_tuple[index])
+	if num >= 1:
+		result = result + num ** 2
 	return(calc_square(result, num_int, index + 1, num_tuple))
 
 if __name__ == "__main__":
